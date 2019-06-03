@@ -13,4 +13,9 @@ routes.post('/tools', async (req, res) => {
   return res.json(tool);
 });
 
+routes.delete('/tools/:id', async (req, res) => {
+  await Tool.findByIdAndDelete(req.params.id);
+  return res.json({})
+})
+
 module.exports = routes;
