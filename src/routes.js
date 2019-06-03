@@ -3,8 +3,9 @@ const routes = require('express').Router();
 const Tool = require('./models/Tool');
 
 routes.get('/tools', async (req, res) => {
-  const tools = await Tool.find();
-  return res.json(tools);
+  const { tag } = req.query;
+
+  return res.json(await Tool.find(tag ? { tags: tag } : undefined));
 });
 
 routes.post('/tools', async (req, res) => {
