@@ -1,6 +1,15 @@
 const routes = require('express').Router();
+const jwt = require('jsonwebtoken');
 
 const Tool = require('./models/Tool');
+const authMiddleware = require('./middlewares/authMiddleware');
+
+routes.get('/auth', (req, res) => {
+  const token = jwt.sign({}, process.env.SECRET_KEY, { expiresIn: 86400 });
+  return res.json({ token });
+});
+
+routes.use(authMiddleware);
 
 routes.get('/tools', async (req, res) => {
   const { tag } = req.query;
