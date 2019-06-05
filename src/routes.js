@@ -1,9 +1,12 @@
 const routes = require('express').Router();
-const swaggerUi = require('swagger-ui-express')
 const jwt = require('jsonwebtoken');
+const swaggerUi = require('swagger-ui-express')
 
 const Tool = require('./models/Tool');
 const authMiddleware = require('./middlewares/authMiddleware');
+const swaggerDocument = require('../swagger.json');
+
+routes.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 routes.get('/auth', (req, res) => {
   const token = jwt.sign({}, process.env.SECRET_KEY, { expiresIn: 86400 });
