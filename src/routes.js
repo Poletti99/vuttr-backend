@@ -1,4 +1,5 @@
 const routes = require('express').Router();
+const swaggerUi = require('swagger-ui-express')
 const jwt = require('jsonwebtoken');
 
 const Tool = require('./models/Tool');
