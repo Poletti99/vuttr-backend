@@ -1,6 +1,6 @@
 const routes = require('express').Router();
 const jwt = require('jsonwebtoken');
-const swaggerUi = require('swagger-ui-express')
+const swaggerUi = require('swagger-ui-express');
 
 const Tool = require('./models/Tool');
 const authMiddleware = require('./middlewares/authMiddleware');
@@ -21,6 +21,13 @@ routes.get('/tools', async (req, res) => {
   return res.json(await Tool.find(tag ? { tags: tag } : undefined));
 });
 
+routes.put('/tools/:id', async (req, res) => {
+  const tool = await Tool.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+  });
+  return res.json(tool);
+});
+
 routes.post('/tools', async (req, res) => {
   const tool = await Tool.create(req.body);
   return res.json(tool);
@@ -28,7 +35,7 @@ routes.post('/tools', async (req, res) => {
 
 routes.delete('/tools/:id', async (req, res) => {
   await Tool.findByIdAndDelete(req.params.id);
-  return res.json({})
-})
+  return res.json({});
+});
 
 module.exports = routes;
